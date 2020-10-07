@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using EmployeeMgt.Model;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace EmployeeMgt.Pages.EmployeeList
+{
+    public class CreateModel : PageModel
+    {
+        private readonly ApplicationDBContext _db;
+
+        public CreateModel(ApplicationDBContext db)
+        {
+            _db = db;
+        }
+
+        public Employee Employee { get; set; }
+        public void OnGet()
+        {
+
+        }
+        public async Task<IActionResult> OnPost()
+        {
+            if (ModelState.IsValid)
+            {
+                await _db.Employee.AddAsync(Employee);
+                await _db.SaveChangesAsync();
+                return RedirectToPage("Index");
+            }
+            else
+            {
+                return Page();
+            }
+        }
+    }
+}
+    
+    
+    
+  
